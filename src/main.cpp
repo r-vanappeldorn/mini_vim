@@ -61,11 +61,16 @@ int main() {
       buffer.push_back((int)(unsigned char)c);
     } 
 
+    if (c == 13) {
+      buffer.push_back('\n');
+    }
+
     if (buffer.length() != 0 && c == 127)  {
       buffer.pop_back();
     }
 
-    cout << buffer << endl;
+    cout << "\033[2J\033[1;1H" << buffer;
+    cout.flush();
   }
 
   return 0;
