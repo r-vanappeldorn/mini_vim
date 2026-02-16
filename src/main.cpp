@@ -1,76 +1,30 @@
-#include <sys/types.h>
-#include <termios.h>
-#include <unistd.h>
+#include "domain/editor/editor_state.hpp"
+#include "infra/terminal.hpp"
+#include "domain/editor/editor.hpp"
 
-#include <cerrno>
-#include <csignal>
-#include <string>
-#include <cstdlib>
-#include <cstring>
 #include <iostream>
 
-using namespace std;
-
-static termios g_orig;
-
-static void disableRawMode() {
-  tcsetattr(STDERR_FILENO, TCSAFLUSH, &g_orig);
-}
-
-static void die(string msg) {
-  cerr << msg << ": " << strerror(errno) << endl;
-  exit(1);
-}
-
-static void enableRawMode() {
-  if (tcgetattr(STDERR_FILENO, &g_orig) == -1) die("tcsetattr");
-
-  atexit(disableRawMode);
-
-  termios raw = g_orig;
-
-  raw.c_lflag &= ~(ICANON | ECHO | ISIG);
-  
-  raw.c_iflag &= ~(IXON | ICRNL);
-
-  raw.c_cc[VMIN] = 1;
-  raw.c_cc[VTIME] = 0;
-
-  if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw) == -1) die("tcsetattr");
-}
+#include <sys/types.h>
+#include <unistd.h>
 
 int main() {
-  enableRawMode();
+  mini_vim::infra::Terminal terminal;
+  mini_vim::domain::editor::Editor editor;
+  mini_vim::domain::editor::EditorState editorState;
 
-  cout << "Raw mode ON. Press 'q' to quit" << endl;
-
-  string buffer = "";
-
-  while(true) {
+  while (editorState.running()) {
     char c;
-
-    ssize_t n = read(STDERR_FILENO, &c, 1);
-    if (n == -1) die("read");
-
-    if (c == 'q') {
-      cout << "\nExiting..." << endl;
+    ssize_t n = read(STDIN_FILENO, &c, 1);
+    editorState.setKeyPressed(c);
+    if (n == -1) {
+      terminal.die("read");
       break;
     }
 
-    if (c >= 32 && c <= 126) {
-      buffer.push_back((int)(unsigned char)c);
-    } 
+    editor.process(editorState);
 
-    if (c == 13) {
-      buffer.push_back('\n');
-    }
-
-    if (buffer.length() != 0 && c == 127)  {
-      buffer.pop_back();
-    }
-
-    cout << "\033[2J\033[1;1H" << buffer;
-    cout.flush();
+    std::cout << "\033[2J\033[1;1H" << editorState.getTerminalBuffer().contents();
+    std::cout.flush();
   }
 
   return 0;
