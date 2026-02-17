@@ -1,7 +1,8 @@
 #include "domain/editor/editor.hpp"
 #include "domain/editor/editor_state.hpp"
-#include "domain/editor/keys.hpp" #include "domain/editor/mode/mode_enum.hpp"
-op
+#include "domain/editor/keys.hpp"
+#include "domain/editor/mode/mode_enum.hpp"
+
 #include "domain/editor/mode/insert.hpp"
 
 #include <memory>
