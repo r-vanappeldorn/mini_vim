@@ -14,7 +14,7 @@ int main() {
   mini_vim::infra::Terminal terminal;
   mini_vim::domain::editor::Editor editor;
   mini_vim::domain::editor::EditorState editorState;
-  mini_vim::domain::renderer::Renderer renderer;
+  mini_vim::domain::renderer::Renderer renderer = mini_vim::domain::renderer::Renderer(terminal);
 
   renderer.render(editorState);
   while (editorState.running()) {
