@@ -39,4 +39,8 @@ char EditorState::getKeyPressed() const {
   return keyPressed;
 }
 
+void EditorState::killProcess() {
+  isRunning = false;
+}
+
 };
