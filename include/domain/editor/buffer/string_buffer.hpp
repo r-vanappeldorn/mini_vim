@@ -12,5 +12,6 @@ class StringBuffer {
     void insert(char c);
     void backspace();
     void newLine();
+    void clear();
 };
 };;

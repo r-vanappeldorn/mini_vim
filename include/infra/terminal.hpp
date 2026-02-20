@@ -1,5 +1,7 @@
 #pragma once
 
+#include <atomic>
+#include <sys/ioctl.h>
 #include <termios.h>
 #include <string>
 
@@ -12,6 +14,9 @@ class Terminal final {
 
   private: 
     termios g_orig;
+    struct winsize ws;
+    std::atomic_bool g_resized{false};
+
 
     void enableRawMode();
     void disableRawMode();

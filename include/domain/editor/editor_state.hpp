@@ -22,6 +22,7 @@ class EditorState {
     buffer::StringBuffer& getCommandBuffer();
     char getKeyPressed() const;
     void setKeyPressed(char keyPressed);
+    void killProcess();
 };
 
 };

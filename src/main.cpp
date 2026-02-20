@@ -1,17 +1,22 @@
 #include "domain/editor/editor_state.hpp"
 #include "infra/terminal.hpp"
 #include "domain/editor/editor.hpp"
-
-#include <iostream>
+#include "domain/renderer/renderer.hpp"
 
 #include <sys/types.h>
 #include <unistd.h>
+#include <sys/ioctl.h>
+#include <termios.h>
+#include <unistd.h>
+
 
 int main() {
   mini_vim::infra::Terminal terminal;
   mini_vim::domain::editor::Editor editor;
   mini_vim::domain::editor::EditorState editorState;
+  mini_vim::domain::renderer::Renderer renderer;
 
+  renderer.render(editorState);
   while (editorState.running()) {
     char c;
     ssize_t n = read(STDIN_FILENO, &c, 1);
@@ -22,9 +27,7 @@ int main() {
     }
 
     editor.process(editorState);
-
-    std::cout << "\033[2J\033[1;1H" << editorState.getTerminalBuffer().contents();
-    std::cout.flush();
+    renderer.render(editorState);
   }
 
   return 0;

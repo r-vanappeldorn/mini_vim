@@ -1,16 +1,20 @@
 #include "infra/terminal.hpp"
 
+#include <asm-generic/ioctls.h>
 #include <cerrno>
 #include <iostream>
 
+#include <sys/ioctl.h>
 #include <termios.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <string.h>
 
 namespace mini_vim::infra {
+
   Terminal::Terminal() {
     this->enableRawMode();
+    ioctl (STDOUT_FILENO, TIOCGWINSZ, &ws);
   }
 
   Terminal::~Terminal() {

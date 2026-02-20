@@ -21,4 +21,8 @@ void StringBuffer::newLine() {
 void StringBuffer::backspace() {
   content.pop_back();
 }
+
+void StringBuffer::clear() {
+  content.clear();
+}
 };
