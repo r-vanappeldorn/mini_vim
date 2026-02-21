@@ -16,6 +16,7 @@ class Renderer {
   public:
     Renderer(infra::Terminal& terminal);
     void render(EditorState& editorState);
+    void clear();
 };
 
 };

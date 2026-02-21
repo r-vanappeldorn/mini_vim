@@ -11,6 +11,10 @@
 namespace mini_vim::domain::renderer {
 
 Renderer::Renderer(infra::Terminal &t) : terminal(t) {
+  clear();
+}
+
+void Renderer::clear() {
   std::cout << "\033[2J\033[1;1H";
 }
 
