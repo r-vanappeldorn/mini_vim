@@ -10,7 +10,9 @@
 
 namespace mini_vim::domain::renderer {
 
-Renderer::Renderer(infra::Terminal &t) : terminal(t) {}
+Renderer::Renderer(infra::Terminal &t) : terminal(t) {
+  std::cout << "\033[2J\033[1;1H";
+}
 
 void Renderer::render(EditorState &editorState) {
   switch (editorState.getMode()) {
@@ -49,7 +51,6 @@ void Renderer::render(EditorState &editorState) {
       len++;
     }
 
-    std::cout << "\033[2J\033[1;1H";
     for (int i = 0; i < terminal.getRows(); i++) {
       std::cout << out[i] << '\n';
     }
