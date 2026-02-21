@@ -1,6 +1,7 @@
 #pragma once
 
 #include "domain/editor/editor_state.hpp"
+#include "infra/terminal.hpp"
 
 #include <sys/ioctl.h>
 
@@ -10,9 +11,10 @@ namespace mini_vim::domain::renderer {
 
 class Renderer {
   private:
-    struct winsize ws;
+    infra::Terminal& terminal;
 
   public:
+    Renderer(infra::Terminal& terminal);
     void render(EditorState& editorState);
 };
 

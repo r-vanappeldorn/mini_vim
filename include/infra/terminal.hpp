@@ -23,6 +23,8 @@ class Terminal final {
 
   public:
     void die(std::string msg);
+    unsigned short getColumns();
+    unsigned short getRows();
 
   Terminal(const Terminal&) = delete;
   Terminal& operator=(const Terminal) = delete;
