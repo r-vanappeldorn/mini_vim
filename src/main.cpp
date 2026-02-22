@@ -1,4 +1,6 @@
 #include "domain/editor/editor_state.hpp"
+#include "domain/events/event.hpp"
+#include "domain/events/event_manager.hpp"
 #include "infra/terminal.hpp"
 #include "domain/editor/editor.hpp"
 #include "domain/renderer/renderer.hpp"
@@ -9,12 +11,18 @@
 #include <termios.h>
 #include <unistd.h>
 
+namespace events = mini_vim::domain::events;
+namespace editor = mini_vim::domain::editor;
+namespace renderer = mini_vim::domain::renderer;
 
 int main() {
   mini_vim::infra::Terminal terminal;
-  mini_vim::domain::editor::Editor editor;
-  mini_vim::domain::editor::EditorState editorState;
-  mini_vim::domain::renderer::Renderer renderer = mini_vim::domain::renderer::Renderer(terminal);
+  events::EventManager eventManager;
+  editor::Editor editor = editor::Editor(eventManager);
+  editor::EditorState editorState;
+  renderer::Renderer renderer = renderer::Renderer(terminal);
+
+  eventManager.on(events::Event::MODE_CHANED, renderer.clear);
 
   renderer.render(editorState);
   while (editorState.running()) {

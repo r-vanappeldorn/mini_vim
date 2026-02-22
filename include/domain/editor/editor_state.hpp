@@ -23,6 +23,7 @@ class EditorState {
     char getKeyPressed() const;
     void setKeyPressed(char keyPressed);
     void killProcess();
+    void getEvent();
 };
 
 };
