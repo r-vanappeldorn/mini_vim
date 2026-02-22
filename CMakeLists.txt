@@ -16,6 +16,7 @@ add_executable(mini_vim
   src/domain/editor/mode/normal.cpp
   src/domain/editor/mode/mode_enum.cpp
   src/domain/renderer/renderer.cpp
+  src/domain/events/event_manager.cpp
 )
 
 target_include_directories(mini_vim PRIVATE include)

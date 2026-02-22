@@ -3,6 +3,7 @@
 
 #include "domain/editor/mode/mode_enum.hpp"
 #include "domain/editor/mode/mode_interface.hpp"
+#include "domain/events/event_manager.hpp"
 
 #include <memory>
 #include <unordered_map>
@@ -18,9 +19,10 @@ namespace mini_vim::domain::editor {
 class Editor {
   private:
     ModeMap modeMap;
+    mini_vim::domain::events::EventManager& eventManager;
 
   public:
-    Editor();
+    Editor(mini_vim::domain::events::EventManager& e);
     void process(EditorState& editorState);
     void kill();
 };
