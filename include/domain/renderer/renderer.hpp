@@ -3,9 +3,7 @@
 #include "domain/editor/editor_state.hpp"
 #include "infra/terminal.hpp"
 
-#include <string>
 #include <sys/ioctl.h>
-#include <vector>
 
 using mini_vim::domain::editor::EditorState;
 
@@ -20,7 +18,6 @@ class Renderer {
     Renderer(infra::Terminal& terminal);
     void render(EditorState& editorState);
     static void clear(int args);
-    void parseBuffer(const char *terminalContents, std::vector<std::string>& out);
 };
 
 };

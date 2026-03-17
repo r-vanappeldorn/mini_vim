@@ -5,7 +5,8 @@ namespace mini_vim::domain::editor::mode {
 
 enum class Mode : char {
   Insert,
-  Normal
+  Normal,
+  Command,
 };
 
 std::string to_string(Mode mode);

@@ -11,6 +11,8 @@ std::string to_string(Mode mode)
             break;
       case Mode::Normal: result = "Normal";
             break;
+      case Mode::Command: result = "Command";
+            break;
     }
 
     return result;

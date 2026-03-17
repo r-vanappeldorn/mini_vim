@@ -6,15 +6,13 @@ namespace mini_vim::domain::editor::mode {
 
 void Insert::execute(EditorState& editorState) {
   char key = editorState.getKeyPressed();
-
-  if (key == (int)(unsigned char) Keys::Enter) {
-    editorState.getTerminalBuffer().newLine();
+  if (key == (int)(unsigned char) Keys::Backspace) {
+    editorState.getTerminalBuffer().backspace();
     return;
   }
 
-  if (key == (int)(unsigned char) Keys::Backspace && !editorState.getTerminalBuffer().contents().empty()) {
-    editorState.getTerminalBuffer().backspace();
-    return;
+  if (key == (int)(unsigned char) Keys::Enter) {
+    editorState.getTerminalBuffer().insert('\n');
   }
 
   if (key >= 32 && key <= 126) {
