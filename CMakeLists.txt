@@ -12,8 +12,10 @@ add_executable(mini_vim
   src/domain/editor/editor.cpp
   src/domain/editor/editor_state.cpp
   src/domain/editor/buffer/string_buffer.cpp
+  src/domain/editor/buffer/gap_buffer.cpp
   src/domain/editor/mode/insert.cpp
   src/domain/editor/mode/normal.cpp
+  src/domain/editor/mode/command.cpp
   src/domain/editor/mode/mode_enum.cpp
   src/domain/renderer/renderer.cpp
   src/domain/events/event_manager.cpp
